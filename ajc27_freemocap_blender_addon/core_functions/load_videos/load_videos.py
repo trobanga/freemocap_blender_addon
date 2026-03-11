@@ -112,13 +112,14 @@ def load_videos_as_planes(recording_path: str,
         videos_path = None
 
     if videos_path is not None:
+        if bpy.app.version < (4, 2, 0):
+            try:
+                addon_utils.enable("io_import_images_as_planes")
+            except Exception as e:
+                print("Error enabling `io_import_images_as_planes` addon: ")
+                print(e)
         try:
-            addon_utils.enable("io_import_images_as_planes")
-        except Exception as e:
-            print("Error enabling `io_import_images_as_planes` addon: ")
-            print(e)
-        try:
-            if bpy.app.version[0] >= 4 and bpy.app.version[1] >= 2:
+            if bpy.app.version >= (4, 2, 0):
                 add_videos_to_scene(videos_directory=str(videos_path), parent_object=parent_object)
             else:
                 add_videos_to_scene_pre_4_2(videos_path=str(videos_path), parent_object=parent_object)

@@ -402,7 +402,6 @@ class MainController:
             )
         except Exception as e:
             print(f"Failed to export 3D model: {e}")
-            raise e
 
     def add_capture_cameras(self):
         print("Adding capture cameras...")

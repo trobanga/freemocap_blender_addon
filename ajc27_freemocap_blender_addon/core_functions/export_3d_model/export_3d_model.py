@@ -115,9 +115,13 @@ def export_3d_model(
                 for child_object in child_objects:
                     child_object.select_set(True)
 
-                bpy.ops.export_scene.fbx(
+                import io_scene_fbx.export_fbx_bin as export_fbx_bin
+
+                operator = type('ExportFBX', (), {'report': lambda *args: None})()
+
+                export_fbx_bin.save(
+                    operator, bpy.context,
                     filepath=export_path,
-                    check_existing=True,
                     use_selection=True,
                     bake_anim=True,
                     bake_anim_use_all_bones=True,
